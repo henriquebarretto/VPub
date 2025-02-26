@@ -1,34 +1,85 @@
 package pub;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BarTest {
+
+    private Bar bar;
+    private Boisson coffee;
+    private Boisson whiskey;
+    private Cocktail nonAlcoholicCocktail;
+    private Cocktail alcoholicCocktail;
 
     @BeforeEach
     void setUp() {
-        fail("not implemented");
+        bar = new Bar();
+        coffee = new Boisson("Coffee");
+        whiskey = new Boisson("Whiskey", 40.0f);
+        nonAlcoholicCocktail = new Cocktail("Fruit Punch");
+        alcoholicCocktail = new Cocktail("Whiskey Sour");
+
+        nonAlcoholicCocktail.add("Orange Juice", 50.0);
+        nonAlcoholicCocktail.add("Pineapple Juice", 50.0);
+
+        alcoholicCocktail.add("Whiskey", 50.0);
+        alcoholicCocktail.add("Lemon Juice", 50.0);
     }
 
     @Test
-    void add() {
-        fail("not implemented");
+    void testAddNonAlcoholicDrink() {
+        bar.add(coffee);
+        assertEquals(1, bar.boissonFroide.size());
+        assertEquals("Coffee", bar.boissonFroide.get(0).nom);
     }
 
     @Test
-    void testAdd() {
-       fail("not implemented");
+    void testAddAlcoholicDrink() {
+        bar.add(whiskey);
+        assertEquals(1, bar.boissonAlcoolisee.size());
+        assertEquals("Whiskey", bar.boissonAlcoolisee.get(0).nom);
     }
 
     @Test
-    void serv() {
-       fail("not implemented");
+    void testAddNonAlcoholicCocktail() {
+        bar.add(nonAlcoholicCocktail);
+        assertEquals(1, bar.cocktailSansAlcoole.size());
+        assertEquals("Fruit Punch", bar.cocktailSansAlcoole.get(0).nom);
     }
 
     @Test
-    void testToString() {
-       fail("not implemented");
+    void testAddAlcoholicCocktail() {
+        bar.add(alcoholicCocktail);
+        assertEquals(1, bar.cocktailAvecAlcoole.size());
+        assertEquals("Whiskey Sour", bar.cocktailAvecAlcoole.get(0).nom);
+    }
+
+    @Test
+    void testServeDrinkAvailable() {
+        bar.add(coffee);
+        Boisson servedDrink = (Boisson) bar.serv("Coffee");
+        assertNotNull(servedDrink);
+        assertEquals("Coffee", servedDrink.nom);
+        assertEquals(0, bar.boissonFroide.size());
+    }
+
+    @Test
+    void testServeDrinkNotAvailable() {
+        assertNull(bar.serv("Coca-Cola"));
+    }
+
+    @Test
+    void testServeCocktailAvailable() {
+        bar.add(nonAlcoholicCocktail);
+        Cocktail servedCocktail = (Cocktail) bar.serv("Fruit Punch");
+        assertNotNull(servedCocktail);
+        assertEquals("Fruit Punch", servedCocktail.nom);
+        assertEquals(0, bar.cocktailSansAlcoole.size());
+    }
+
+    @Test
+    void testServeCocktailNotAvailable() {
+        assertNull(bar.serv("Mojito"));
     }
 }

@@ -1,23 +1,37 @@
 package pub;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 class PubTest {
+
+    private Pub pub;
 
     @BeforeEach
     void setUp() {
-       fail("not implemented");
+        pub = new Pub();
+        pub.cave.add(new Boisson("Cola"));
+        pub.cave.add(new Boisson("Beer", 5.0f));
     }
 
     @Test
-    void approvisionnerBar() {
-        fail("not implemented");
+    void testStockBarFromCave() {
+        pub.approvisionnerBar("Beer");
+        assertEquals(1, pub.bar.boissonAlcoolisee.size());
     }
 
     @Test
-    void main() {
-       fail("not implemented");
+    void testServeDrinkFromBar() {
+        pub.approvisionnerBar("Cola");
+        Object servedDrink = pub.bar.serv("Cola");
+        assertNotNull(servedDrink);
+        assertTrue(servedDrink instanceof Boisson);
+        assertEquals("Cola", ((Boisson) servedDrink).nom);
+    }
+
+    @Test
+    void testServeUnavailableDrink() {
+        assertNull(pub.bar.serv("Water"));
     }
 }

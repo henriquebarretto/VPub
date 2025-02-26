@@ -1,19 +1,33 @@
 package pub;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class BoissonTest {
 
-    @BeforeEach
-    void setUp() {
-        fail("not implemented");
+    @Test
+    void testCreateNonAlcoholicDrink() {
+        Boisson water = new Boisson("Water");
+        assertEquals("Water", water.nom);
+        assertFalse(water.alcoolise);
     }
 
     @Test
-    void testToString() {
-       fail("not implemented");
+    void testCreateAlcoholicDrink() {
+        Boisson beer = new Boisson("Beer", 5.0f);
+        assertEquals("Beer", beer.nom);
+        assertTrue(beer.alcoolise);
+    }
+
+    @Test
+    void testToStringNonAlcoholicDrink() {
+        Boisson juice = new Boisson("Juice");
+        assertEquals("Juice", juice.toString());
+    }
+
+    @Test
+    void testToStringAlcoholicDrink() {
+        Boisson vodka = new Boisson("Vodka", 40.0f);
+        assertEquals("Vodka (l'abus d'alcool est dangereux pour la sante)", vodka.toString());
     }
 }

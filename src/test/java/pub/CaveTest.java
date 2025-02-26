@@ -1,29 +1,40 @@
 package pub;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CaveTest {
+
+    private Cave cave;
+    private Boisson wine;
+    private Boisson soda;
 
     @BeforeEach
     void setUp() {
-        fail("not implemented");
+        cave = new Cave();
+        wine = new Boisson("Wine", 12.0f);
+        soda = new Boisson("Soda");
     }
 
     @Test
-    void add() {
-        fail("not implemented");
+    void testAddDrinkToCave() {
+        cave.add(wine);
+        assertEquals(1, cave.rayons.size());
+        assertEquals("Wine", cave.rayons.get(0).nom);
     }
 
     @Test
-    void take() {
-        fail("not implemented");
+    void testTakeExistingDrink() {
+        cave.add(soda);
+        Boisson takenDrink = cave.take("Soda");
+        assertNotNull(takenDrink);
+        assertEquals("Soda", takenDrink.nom);
+        assertEquals(0, cave.rayons.size());
     }
 
     @Test
-    void testToString() {
-       fail("not implemented");
+    void testTakeNonExistingDrink() {
+        assertNull(cave.take("Whiskey"));
     }
 }
