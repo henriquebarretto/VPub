@@ -26,7 +26,7 @@ class PubTest {
         pub.approvisionnerBar("Cola");
         Object servedDrink = pub.bar.serv("Cola");
         assertNotNull(servedDrink);
-        assertTrue(servedDrink instanceof Boisson);
+        assertInstanceOf(Boisson.class, servedDrink); // Corrigido
         assertEquals("Cola", ((Boisson) servedDrink).nom);
     }
 

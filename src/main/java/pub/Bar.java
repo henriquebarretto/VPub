@@ -1,141 +1,92 @@
 package pub;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import java.util.Enumeration;
-import java.util.Vector;
-
-/**
- * @author Pierre Le Fameux
- *
- */
 public class Bar {
-	public Vector<Boisson> boissonChaude;
-	public Vector<Boisson> boissonFroide;
-	public Vector<Boisson> boissonAlcoolisee;
-	public Vector<Cocktail> cocktailSansAlcoole;
-	public Vector<Cocktail> cocktailAvecAlcoole;
-	
-	/**
-	 * 
-	 */
+	List<Boisson> boissonChaude;
+	List<Boisson> boissonFroide;
+	List<Cocktail> cocktailSansAlcoole;
+	List<Boisson> boissonAlcoolisee;
+	List<Cocktail> cocktailAvecAlcoole;
+
 	public Bar(){
-		this.boissonChaude = new Vector<Boisson>();
-		this.boissonFroide = new Vector<Boisson>();
-		this.boissonAlcoolisee = new Vector<Boisson>();
-		
-		this.cocktailAvecAlcoole = new Vector<Cocktail>();
-		this.cocktailSansAlcoole = new Vector<Cocktail>();	
+		this.boissonChaude = new ArrayList<>();
+		this.boissonFroide = new ArrayList<>();
+		this.boissonAlcoolisee = new ArrayList<>();
+		this.cocktailAvecAlcoole = new ArrayList<>();
+		this.cocktailSansAlcoole = new ArrayList<>();
 	}
-	
-	/**
-	 * @param boisson
-	 */
+
 	public void add(Boisson boisson){
-		if(boisson.alcoolise){
+		if (boisson.alcoolise) {
 			this.boissonAlcoolisee.add(boisson);
-		}else{
-			this.boissonFroide.add(boisson);
+		} else {
+			if (boisson.nom.equalsIgnoreCase("coffee") || boisson.nom.equalsIgnoreCase("tea")) {
+				this.boissonChaude.add(boisson);
+			} else {
+				this.boissonFroide.add(boisson);
+			}
 		}
 	}
-	
-	/**
-	 * @param cocktail
-	 */
+
 	public void add(Cocktail cocktail){
-		if(cocktail.alcoolFree()){
+		if (cocktail.alcoolFree()) {
 			this.cocktailSansAlcoole.add(cocktail);
-		}else{
+		} else {
 			this.cocktailAvecAlcoole.add(cocktail);
 		}
 	}
-	
-	/**
-	 * @param command
-	 * @return
-	 */
+
 	public Object serv(String command){
-		Boisson retourB=null;
-		Cocktail retourC=null;
-		Enumeration e;
-		
-		e = this.boissonFroide.elements ();
-		while (e.hasMoreElements () && !((retourB=(Boisson)e.nextElement()).nom.equalsIgnoreCase(command))){}
-		if(retourB.nom.equalsIgnoreCase(command)){
-			this.boissonFroide.remove(retourB);
-			return retourB;
+		Iterator<Boisson> itB;
+		Iterator<Cocktail> itC;
+
+		itB = this.boissonFroide.iterator();
+		while (itB.hasNext()) {
+			Boisson b = itB.next();
+			if (b.nom.equalsIgnoreCase(command)) {
+				itB.remove();
+				return b;
+			}
 		}
-		
-		e = this.boissonAlcoolisee.elements ();
-		while (e.hasMoreElements () && !((retourB=(Boisson)e.nextElement()).nom.equalsIgnoreCase(command))){}
-		if(retourB.nom.equalsIgnoreCase(command)){
-			this.boissonAlcoolisee.remove(retourB);
-			return retourB;
+
+		itB = this.boissonAlcoolisee.iterator();
+		while (itB.hasNext()) {
+			Boisson b = itB.next();
+			if (b.nom.equalsIgnoreCase(command)) {
+				itB.remove();
+				return b;
+			}
 		}
-		
-		e = this.boissonChaude.elements ();
-		while (e.hasMoreElements () && !((retourB=(Boisson)e.nextElement()).nom.equalsIgnoreCase(command))){}
-		if(retourB.nom.equalsIgnoreCase(command)){
-			this.boissonChaude.remove(retourB);
-			return retourB;
+
+		itB = this.boissonChaude.iterator();
+		while (itB.hasNext()) {
+			Boisson b = itB.next();
+			if (b.nom.equalsIgnoreCase(command)) {
+				itB.remove();
+				return b;
+			}
 		}
-		
-		e = this.cocktailSansAlcoole.elements ();
-		while (e.hasMoreElements () && !((retourC=(Cocktail)e.nextElement()).nom.equalsIgnoreCase(command))){}
-		if(retourC.nom.equalsIgnoreCase(command)){
-			this.cocktailSansAlcoole.remove(retourC);
-			return retourC;
+
+		itC = this.cocktailSansAlcoole.iterator();
+		while (itC.hasNext()) {
+			Cocktail c = itC.next();
+			if (c.nom.equalsIgnoreCase(command)) {
+				itC.remove();
+				return c;
+			}
 		}
-		
-		e = this.cocktailAvecAlcoole.elements ();
-		while (e.hasMoreElements () && !((retourC=(Cocktail)e.nextElement()).nom.equalsIgnoreCase(command))){}
-		if(retourC.nom.equalsIgnoreCase(command)){
-			this.cocktailAvecAlcoole.remove(retourC);
-			return retourC;
+
+		itC = this.cocktailAvecAlcoole.iterator();
+		while (itC.hasNext()) {
+			Cocktail c = itC.next();
+			if (c.nom.equalsIgnoreCase(command)) {
+				itC.remove();
+				return c;
+			}
 		}
-		
+
 		return null;
 	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString(){
-		String retour = new String();
-		String eol = System.getProperty("line.separator"); 
-		Enumeration e;
-		
-		retour = retour + "Bar : " + eol;
-		
-		retour = retour + "\t Sans alcool" + eol;
-		e = this.boissonFroide.elements ();
-		while (e.hasMoreElements ()) {
-			retour = retour + "\t\t" + e.nextElement().toString() + eol;
-		}
-		
-		retour = retour + "\t Avec alcool" + eol;
-		e = this.boissonAlcoolisee.elements();
-		while (e.hasMoreElements ()) {
-			retour = retour + "\t\t" + e.nextElement().toString() + eol;
-		}
-		
-		retour = retour + "\t Cocktail sans alcool" + eol;
-		e = this.cocktailSansAlcoole.elements();
-		while (e.hasMoreElements ()) {
-			retour = retour + "\t\t" + e.nextElement().toString() + eol;
-		}
-		
-		retour = retour + "\t Cocktail avec alcool" + eol;
-		e = this.cocktailAvecAlcoole.elements();
-		while (e.hasMoreElements ()) {
-			retour = retour + "\t\t" + e.nextElement().toString() + eol;
-		}
-		
-		retour = retour + "\t Boissons chaudes" + eol;
-		e = this.boissonChaude.elements();
-		while (e.hasMoreElements ()) {
-			retour = retour + "\t\t" + e.nextElement().toString() + eol;
-		}
-		
-		return retour;
-	}
-
 }

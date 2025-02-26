@@ -24,7 +24,7 @@ class CocktailTest {
     @Test
     void testCreateCocktail() {
         assertEquals("Tropical Mix", nonAlcoholicCocktail.nom);
-        assertFalse(nonAlcoholicCocktail.alcoolFree());
+        assertTrue(nonAlcoholicCocktail.alcoolFree());
     }
 
     @Test
@@ -36,7 +36,7 @@ class CocktailTest {
 
     @Test
     void testAlcoholFree() {
-        assertFalse(nonAlcoholicCocktail.alcoolFree());
+        assertTrue(nonAlcoholicCocktail.alcoolFree());
         assertFalse(alcoholicCocktail.alcoolFree());
     }
 

@@ -30,29 +30,29 @@ class BarTest {
     @Test
     void testAddNonAlcoholicDrink() {
         bar.add(coffee);
-        assertEquals(1, bar.boissonFroide.size());
-        assertEquals("Coffee", bar.boissonFroide.get(0).nom);
+        assertEquals(1, bar.boissonChaude.size());
+        assertEquals("Coffee", bar.boissonChaude.getFirst().nom);
     }
 
     @Test
     void testAddAlcoholicDrink() {
         bar.add(whiskey);
         assertEquals(1, bar.boissonAlcoolisee.size());
-        assertEquals("Whiskey", bar.boissonAlcoolisee.get(0).nom);
+        assertEquals("Whiskey", bar.boissonAlcoolisee.getFirst().nom); // Corrigido
     }
 
     @Test
     void testAddNonAlcoholicCocktail() {
         bar.add(nonAlcoholicCocktail);
         assertEquals(1, bar.cocktailSansAlcoole.size());
-        assertEquals("Fruit Punch", bar.cocktailSansAlcoole.get(0).nom);
+        assertEquals("Fruit Punch", bar.cocktailSansAlcoole.getFirst().nom); // Corrigido
     }
 
     @Test
     void testAddAlcoholicCocktail() {
         bar.add(alcoholicCocktail);
         assertEquals(1, bar.cocktailAvecAlcoole.size());
-        assertEquals("Whiskey Sour", bar.cocktailAvecAlcoole.get(0).nom);
+        assertEquals("Whiskey Sour", bar.cocktailAvecAlcoole.getFirst().nom); // Corrigido
     }
 
     @Test

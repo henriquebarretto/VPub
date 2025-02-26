@@ -21,7 +21,7 @@ class CaveTest {
     void testAddDrinkToCave() {
         cave.add(wine);
         assertEquals(1, cave.rayons.size());
-        assertEquals("Wine", cave.rayons.get(0).nom);
+        assertEquals("Wine", cave.rayons.getFirst().nom); // Corrigido
     }
 
     @Test
